@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ProductionService": {
+      "commandName": "Project",
+      "launchUrl": "weatherforecast",
+      "applicationUrl": "http://localhost:5002",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
