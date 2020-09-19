@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using N8T.Domain;
 
-namespace N8T.Infrastructure.Data
+namespace N8T.Infrastructure.EfCore
 {
     public static class Extensions
     {
@@ -17,8 +17,8 @@ namespace N8T.Infrastructure.Data
                     options.UseSqlServer(connString, sqlOptions =>
                     {
                         sqlOptions.MigrationsAssembly(typeof(TType).Assembly.GetName().Name);
-                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 5, TimeSpan.FromSeconds(30), null);
-                    });
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 5, TimeSpan.FromSeconds(10), null);
+                    });//.UseSnakeCaseNamingConvention();
                 });
 
             services.AddScoped<IDbFacadeResolver>(provider => provider.GetService<TDbContext>());

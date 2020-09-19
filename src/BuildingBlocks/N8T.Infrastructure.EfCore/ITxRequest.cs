@@ -1,4 +1,4 @@
-namespace N8T.Infrastructure.Data
+namespace N8T.Infrastructure.EfCore
 {
     public interface ITxRequest
     {

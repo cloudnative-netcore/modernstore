@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using N8T.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using N8T.Domain;
 
-namespace N8T.Infrastructure.Data
+namespace N8T.Infrastructure.EfCore
 {
     public abstract class AppDbContextBase : DbContext, IDomainEventContext, IDbFacadeResolver
     {

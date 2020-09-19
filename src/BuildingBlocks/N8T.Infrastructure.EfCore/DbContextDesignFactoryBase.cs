@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using N8T.Infrastructure.Helpers;
 
-namespace N8T.Infrastructure.Data
+namespace N8T.Infrastructure.EfCore
 {
     public abstract class DbContextDesignFactoryBase<TDbContext> : IDesignTimeDbContextFactory<TDbContext>
         where TDbContext : DbContext

@@ -1,15 +1,15 @@
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using N8T.Domain;
 using System;
 using System.Data;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using N8T.Domain;
 
-namespace N8T.Infrastructure.Data
+namespace N8T.Infrastructure.EfCore
 {
     public class TxBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

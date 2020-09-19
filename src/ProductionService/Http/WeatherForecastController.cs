@@ -25,6 +25,8 @@ namespace ProductionService.Application.Http
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation("start getting WeatherForecast");
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
                 {

@@ -16,14 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Console\" />
-    <Folder Include="Application\GraphQL\" />
-    <Folder Include="Application\Jobs\" />
-    <Folder Include="Application\Subscribers\" />
-    <Folder Include="Application\Publishers\" />
-    <Folder Include="Application\Usecases\" />
-    <Folder Include="Domain\" />
-    <Folder Include="Infrastructure\" />
+    <Folder Include="Core\Application\" />
+    <Folder Include="GraphQL\" />
+    <Folder Include="Jobs\" />
+    <Folder Include="Subscribers\" />
+    <Folder Include="Publishers\" />
+    <Folder Include="Core\Domain\" />
+    <Folder Include="Core\Infrastructure\" />
   </ItemGroup>
 
 </Project>
