@@ -10,8 +10,8 @@ using ProductionService.Core.Infrastructure.Persistence;
 namespace ProductionService.Core.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20200919122941_InitProductionDb")]
-    partial class InitProductionDb
+    [Migration("20200920093728_InitialProductionDb")]
+    partial class InitialProductionDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,9 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -51,7 +53,9 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -79,7 +83,9 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<decimal>("ListPrice")
                         .HasColumnType("decimal(18,2)");
@@ -91,7 +97,10 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StockId")
+                    b.Property<int?>("StockProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StockStoreId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Updated")
@@ -103,12 +112,38 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("StockId");
+                    b.HasIndex("StockStoreId", "StockProductId");
 
                     b.ToTable("Products", "production");
                 });
 
             modelBuilder.Entity("ProductionService.Core.Domain.Stock", b =>
+                {
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("StoreId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Stocks", "production");
+                });
+
+            modelBuilder.Entity("ProductionService.Core.Domain.Store", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,25 +151,20 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Stocks", "production");
+                    b.ToTable("Stores", "production");
                 });
 
             modelBuilder.Entity("ProductionService.Core.Domain.Product", b =>
@@ -153,7 +183,7 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
 
                     b.HasOne("ProductionService.Core.Domain.Stock", null)
                         .WithMany()
-                        .HasForeignKey("StockId");
+                        .HasForeignKey("StockStoreId", "StockProductId");
 
                     b.Navigation("Brand");
 
@@ -168,7 +198,15 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProductionService.Core.Domain.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
+
+                    b.Navigation("Store");
                 });
 #pragma warning restore 612, 618
         }

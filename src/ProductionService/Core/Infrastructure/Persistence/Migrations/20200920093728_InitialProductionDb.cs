@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductionService.Core.Infrastructure.Persistence.Migrations
 {
-    public partial class InitProductionDb : Migration
+    public partial class InitialProductionDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -34,12 +34,28 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stores",
+                schema: "production",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,8 +70,9 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     ModelYear = table.Column<int>(type: "int", nullable: false),
                     ListPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StockId = table.Column<int>(type: "int", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StockProductId = table.Column<int>(type: "int", nullable: true),
+                    StockStoreId = table.Column<int>(type: "int", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -82,22 +99,27 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                 schema: "production",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     StoreId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stocks", x => x.Id);
+                    table.PrimaryKey("PK_Stocks", x => new { x.StoreId, x.ProductId });
                     table.ForeignKey(
                         name: "FK_Stocks_Products_ProductId",
                         column: x => x.ProductId,
                         principalSchema: "production",
                         principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Stocks_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalSchema: "production",
+                        principalTable: "Stores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -115,10 +137,10 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_StockId",
+                name: "IX_Products_StockStoreId_StockProductId",
                 schema: "production",
                 table: "Products",
-                column: "StockId");
+                columns: new[] { "StockStoreId", "StockProductId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_ProductId",
@@ -127,13 +149,13 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                 column: "ProductId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Products_Stocks_StockId",
+                name: "FK_Products_Stocks_StockStoreId_StockProductId",
                 schema: "production",
                 table: "Products",
-                column: "StockId",
+                columns: new[] { "StockStoreId", "StockProductId" },
                 principalSchema: "production",
                 principalTable: "Stocks",
-                principalColumn: "Id",
+                principalColumns: new[] { "StoreId", "ProductId" },
                 onDelete: ReferentialAction.Restrict);
         }
 
@@ -150,7 +172,7 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
                 table: "Products");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Products_Stocks_StockId",
+                name: "FK_Products_Stocks_StockStoreId_StockProductId",
                 schema: "production",
                 table: "Products");
 
@@ -168,6 +190,10 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products",
+                schema: "production");
+
+            migrationBuilder.DropTable(
+                name: "Stores",
                 schema: "production");
         }
     }

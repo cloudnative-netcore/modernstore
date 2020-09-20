@@ -4,9 +4,8 @@ namespace ProductionService.Core.Domain
 {
     public class Stock : EntityBase
     {
-        public int Id { get; set; }
-
-        public int StoreId { get; set; } // soft ref to sale service
+        public int StoreId { get; set; }
+        public Store Store { get; set; }
 
         public int ProductId { get; set; }
 

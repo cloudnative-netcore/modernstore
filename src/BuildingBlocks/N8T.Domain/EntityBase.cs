@@ -5,7 +5,7 @@ namespace N8T.Domain
 {
     public abstract class EntityBase
     {
-        public DateTime Created { get; protected set; }
+        public DateTime Created { get; protected set; } = DateTime.UtcNow;
         public DateTime? Updated { get; protected set; }
         public HashSet<DomainEventBase> DomainEvents { get; private set; }
 

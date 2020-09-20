@@ -16,13 +16,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-rc.1.20451.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Core\Application\" />
+    <Folder Include="Core\Infrastructure\Persistence\Migrations\" />
     <Folder Include="GraphQL\" />
     <Folder Include="Jobs\" />
     <Folder Include="Subscribers\" />
     <Folder Include="Publishers\" />
-    <Folder Include="Core\Domain\" />
-    <Folder Include="Core\Infrastructure\" />
   </ItemGroup>
 
 </Project>
