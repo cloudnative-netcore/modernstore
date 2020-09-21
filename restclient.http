@@ -1,0 +1,17 @@
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@hostname = localhost
+@port = 5002
+@host = http://{{hostname}}:{{port}}
+@contentType = application/json
+
+###
+@term = Townie
+@page = 1
+@pageSize = 20
+GET {{host}}/products/{{term}}/{{page}}/{{pageSize}} HTTP/1.1
+Content-Type: {{contentType}}
+
+###
+GET {{host}}/s/products HTTP/1.1
+Content-Type: {{contentType}}

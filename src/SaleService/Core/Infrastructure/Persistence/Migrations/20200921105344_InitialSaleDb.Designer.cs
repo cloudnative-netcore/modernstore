@@ -10,7 +10,7 @@ using SaleService.Core.Infrastructure.Persistence;
 namespace SaleService.Core.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20200920111932_InitialSaleDb")]
+    [Migration("20200921105344_InitialSaleDb")]
     partial class InitialSaleDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,7 +164,10 @@ namespace SaleService.Core.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<string>("Name")
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
