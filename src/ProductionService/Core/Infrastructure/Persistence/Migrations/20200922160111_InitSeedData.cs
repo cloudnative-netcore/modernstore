@@ -7,7 +7,7 @@ namespace ProductionService.Core.Infrastructure.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.MigrateDateFromScript();
+            migrationBuilder.MigrateDataFromScript();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

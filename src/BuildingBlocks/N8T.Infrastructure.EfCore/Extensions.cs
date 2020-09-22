@@ -33,7 +33,7 @@ namespace N8T.Infrastructure.EfCore
             return services;
         }
 
-        public static void MigrateDateFromScript(this MigrationBuilder migrationBuilder)
+        public static void MigrateDataFromScript(this MigrationBuilder migrationBuilder)
         {
             var assembly = Assembly.GetEntryAssembly();
             if (assembly == null) return;

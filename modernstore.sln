@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Domain", "src\BuildingB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Infrastructure", "src\BuildingBlocks\N8T.Infrastructure\N8T.Infrastructure.csproj", "{48681B3B-956B-437C-AF01-F940DD420474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N8T.Infrastructure.GraphQL", "src\BuildingBlocks\N8T.Infrastructure.GraphQL\N8T.Infrastructure.GraphQL.csproj", "{9B0E499F-5C9E-45DD-BDE1-06F993DD149F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Infrastructure.GraphQL", "src\BuildingBlocks\N8T.Infrastructure.GraphQL\N8T.Infrastructure.GraphQL.csproj", "{9B0E499F-5C9E-45DD-BDE1-06F993DD149F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N8T.Infrastructure.OTel", "src\BuildingBlocks\N8T.Infrastructure.OTel\N8T.Infrastructure.OTel.csproj", "{E3116C52-A0F6-4F52-BC5F-549F13FB5D04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Infrastructure.OTel", "src\BuildingBlocks\N8T.Infrastructure.OTel\N8T.Infrastructure.OTel.csproj", "{E3116C52-A0F6-4F52-BC5F-549F13FB5D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N8T.Infrastructure.EfCore", "src\BuildingBlocks\N8T.Infrastructure.EfCore\N8T.Infrastructure.EfCore.csproj", "{077C305D-3374-48C0-86BC-397053121EA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Infrastructure.EfCore", "src\BuildingBlocks\N8T.Infrastructure.EfCore\N8T.Infrastructure.EfCore.csproj", "{077C305D-3374-48C0-86BC-397053121EA0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{E860A5F3-62EA-45B5-9BB4-BCEC975B07C1}"
 	ProjectSection(SolutionItems) = preProject
@@ -27,15 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{E860A5F3-62EA-45
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N8T.Infrastructure.Dapper", "src\BuildingBlocks\N8T.Infrastructure.Dapper\N8T.Infrastructure.Dapper.csproj", "{52E28CE6-6974-4D04-AF63-2867161DAEE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Infrastructure.Dapper", "src\BuildingBlocks\N8T.Infrastructure.Dapper\N8T.Infrastructure.Dapper.csproj", "{52E28CE6-6974-4D04-AF63-2867161DAEE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductionService", "src\ProductionService\ProductionService.csproj", "{683EC9DE-C227-4C25-A032-AA640C891D0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductionService", "src\ProductionService\ProductionService.csproj", "{683EC9DE-C227-4C25-A032-AA640C891D0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaleService", "src\SaleService\SaleService.csproj", "{F13DC714-CC5D-40A0-B8DD-0EA065CC9A93}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGateway", "src\Gateway\AppGateway.csproj", "{A0D6833F-1572-4092-B358-C1E56EC5989B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernStoreConsole", "src\ModernStoreConsole\ModernStoreConsole.csproj", "{694EED83-762B-43C9-BEB4-328D15D6F65C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{2623B7D6-9D07-4630-B724-1F0ED4641A7F}"
 EndProject
@@ -83,10 +81,6 @@ Global
 		{A0D6833F-1572-4092-B358-C1E56EC5989B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D6833F-1572-4092-B358-C1E56EC5989B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D6833F-1572-4092-B358-C1E56EC5989B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{694EED83-762B-43C9-BEB4-328D15D6F65C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{694EED83-762B-43C9-BEB4-328D15D6F65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{694EED83-762B-43C9-BEB4-328D15D6F65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{694EED83-762B-43C9-BEB4-328D15D6F65C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
