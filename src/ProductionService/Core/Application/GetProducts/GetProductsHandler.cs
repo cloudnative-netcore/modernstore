@@ -12,6 +12,7 @@ namespace ProductionService.Core.Application.GetProducts
     public class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
     {
         private readonly IDbConnection _connection;
+
         public GetProductsHandler(IDbConnection connection)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));

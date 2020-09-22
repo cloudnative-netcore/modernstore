@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Dapper;
-using Microsoft.Extensions.ObjectPool;
 
 namespace N8T.Infrastructure.Dapper
 {
@@ -15,49 +14,36 @@ namespace N8T.Infrastructure.Dapper
             if (reader == null) throw new ArgumentNullException(nameof(reader));
             if (ordinal < 0) throw new ArgumentOutOfRangeException(nameof(ordinal));
 
-            var builderPool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
-            var builder = builderPool.Get();
+            var builder = new StringBuilder();
 
-            try
-            {
-                while (reader.Read())
-                {
-                    // only use for json string return from database with "FOR JSON PATH"
-                    builder.Append(reader.GetString(ordinal));
-                }
-
-                return string.IsNullOrEmpty(builder.ToString())
-                    ? default
-                    : JsonSerializer.Deserialize<T>(builder.ToString());
-            }
-            finally
-            {
-                builderPool.Return(builder);
-            }
-        }
-
-        public static async Task<T> QueryData<T>(this IDbConnection connection,
-            string sql, object param = null, IDbTransaction transaction = null, int? cmdTimeout = null, CommandType? cmdType = null)
-        {
-            var builderPool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
-            var builder = builderPool.Get();
-
-            try
+            while (reader.Read())
             {
                 // only use for json string return from database with "FOR JSON PATH"
-                foreach (var s in await connection.QueryAsync<string>(sql, param, transaction, cmdTimeout, cmdType))
-                {
-                    builder.Append(s);
-                }
+                builder.Append(reader.GetString(ordinal));
+            }
 
-                return string.IsNullOrEmpty(builder.ToString())
-                    ? default
-                    : JsonSerializer.Deserialize<T>(builder.ToString());
-            }
-            finally
+            return string.IsNullOrEmpty(builder.ToString())
+                ? default
+                : JsonSerializer.Deserialize<T>(builder.ToString());
+        }
+
+        public static async Task<T> QueryData<T>(this IDbConnection connection, string sql, object param = null,
+            IDbTransaction transaction = null, int? cmdTimeout = null, CommandType? cmdType = null)
+        {
+            if (connection == null) throw new ArgumentNullException(nameof(connection));
+            if (sql == null) throw new ArgumentNullException(nameof(sql));
+
+            var builder = new StringBuilder();
+
+            // only use for json string return from database with "FOR JSON PATH"
+            foreach (var s in await connection.QueryAsync<string>(sql, param, transaction, cmdTimeout, cmdType))
             {
-                builderPool.Return(builder);
+                builder.Append(s);
             }
+
+            return string.IsNullOrEmpty(builder.ToString())
+                ? default
+                : JsonSerializer.Deserialize<T>(builder.ToString());
         }
     }
 }
