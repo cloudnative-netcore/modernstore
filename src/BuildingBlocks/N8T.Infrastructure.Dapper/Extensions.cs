@@ -10,8 +10,7 @@ namespace N8T.Infrastructure.Dapper
 {
     public static class Extensions
     {
-        public static T GetData<T>(this IDataReader reader,
-            ObjectPool<StringBuilder> builderPool = null, int ordinal = 0)
+        public static T GetData<T>(this IDataReader reader, ObjectPool<StringBuilder> builderPool = null, int ordinal = 0)
         {
             if (reader == null) throw new ArgumentNullException(nameof(reader));
             if (ordinal < 0) throw new ArgumentOutOfRangeException(nameof(ordinal));

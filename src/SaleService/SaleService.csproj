@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Core\Infrastructure\Persistence\Scripts\20200921105344_load-sale.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Core\Infrastructure\Persistence\Scripts\20200921105344_load-sale.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\N8T.Domain\N8T.Domain.csproj" />
     <ProjectReference Include="..\BuildingBlocks\N8T.Infrastructure.Dapper\N8T.Infrastructure.Dapper.csproj" />
     <ProjectReference Include="..\BuildingBlocks\N8T.Infrastructure.EfCore\N8T.Infrastructure.EfCore.csproj" />
