@@ -10,12 +10,12 @@ namespace N8T.Infrastructure.Dapper
 {
     public static class Extensions
     {
-        public static T GetData<T>(this IDataReader reader, ObjectPool<StringBuilder> builderPool = null, int ordinal = 0)
+        public static T GetData<T>(this IDataReader reader, int ordinal = 0)
         {
             if (reader == null) throw new ArgumentNullException(nameof(reader));
             if (ordinal < 0) throw new ArgumentOutOfRangeException(nameof(ordinal));
 
-            builderPool ??= new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+            var builderPool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
             var builder = builderPool.Get();
 
             try
@@ -37,10 +37,9 @@ namespace N8T.Infrastructure.Dapper
         }
 
         public static async Task<T> QueryData<T>(this IDbConnection connection,
-            string sql, object param = null, ObjectPool<StringBuilder> builderPool = null,
-            IDbTransaction transaction = null, int? cmdTimeout = null, CommandType? cmdType = null)
+            string sql, object param = null, IDbTransaction transaction = null, int? cmdTimeout = null, CommandType? cmdType = null)
         {
-            builderPool ??= new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+            var builderPool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
             var builder = builderPool.Get();
 
             try

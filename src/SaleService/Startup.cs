@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.ObjectPool;
 using N8T.Infrastructure;
 using N8T.Infrastructure.EfCore;
 using N8T.Infrastructure.Validator;
@@ -25,15 +23,6 @@ namespace SaleService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.TryAddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-
-            services.TryAddSingleton(serviceProvider =>
-            {
-                var provider = serviceProvider.GetRequiredService<ObjectPoolProvider>();
-                var policy = new StringBuilderPooledObjectPolicy();
-                return provider.Create(policy);
-            });
-
             services.AddHttpContextAccessor()
                 .AddCustomMediatR<Startup>()
                 .AddCustomValidators<Program>()

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.ObjectPool;
 using N8T.Infrastructure.Dapper;
 using ProductionService.Core.Application.Common;
 
@@ -14,12 +12,9 @@ namespace ProductionService.Core.Application.GetProducts
     public class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
     {
         private readonly IDbConnection _connection;
-        private readonly ObjectPool<StringBuilder> _builderPool;
-
-        public GetProductsHandler(IDbConnection connection, ObjectPool<StringBuilder> builderPool)
+        public GetProductsHandler(IDbConnection connection)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));
-            _builderPool = builderPool ?? throw new ArgumentNullException(nameof(builderPool));
         }
 
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
@@ -52,11 +47,11 @@ namespace ProductionService.Core.Application.GetProducts
                 PagedNumber = request.Page, RowsPerPage = request.PageSize, Term = $"%{request.SearchProductName}%"
             };
 
-            var result = await _connection.QueryData<List<ProductDto>>(query, @params, _builderPool);
+            var result = await _connection.QueryData<List<ProductDto>>(query, @params);
 
             //this is sample for how to use DataReader
             //var reader = await _connection.ExecuteReaderAsync(query, @params);
-            //var result = reader.GetData<List<ProductDto>>(_builderPool);
+            //var result = reader.GetData<List<ProductDto>>();
 
             return result;
         }
