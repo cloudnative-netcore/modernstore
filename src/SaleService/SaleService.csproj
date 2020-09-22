@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Core\Infrastructure\Persistence\Scripts\20200921105344_load-sale.sql" />
+    <None Remove="Core\Infrastructure\Persistence\Scripts\20200922160521_load-sale.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Core\Infrastructure\Persistence\Scripts\20200921105344_load-sale.sql" />
+    <EmbeddedResource Include="Core\Infrastructure\Persistence\Scripts\20200922160521_load-sale.sql" />
   </ItemGroup>
 
   <ItemGroup>

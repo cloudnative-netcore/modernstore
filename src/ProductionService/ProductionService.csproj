@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Core\Infrastructure\Persistence\Scripts\20200920093728_load-production.sql" />
+    <None Remove="Core\Infrastructure\Persistence\Scripts\20200922160111_load-production.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Core\Infrastructure\Persistence\Scripts\20200920093728_load-production.sql" />
+    <EmbeddedResource Include="Core\Infrastructure\Persistence\Scripts\20200922160111_load-production.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Infrastructure\Persistence\Migrations\" />
     <Folder Include="GraphQL\" />
     <Folder Include="Jobs\" />
     <Folder Include="Subscribers\" />

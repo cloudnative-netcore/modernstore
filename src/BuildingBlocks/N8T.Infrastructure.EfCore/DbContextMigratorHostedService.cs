@@ -1,7 +1,4 @@
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
@@ -33,53 +30,8 @@ namespace N8T.Infrastructure.EfCore
             {
                 using var scope = _serviceProvider.CreateScope();
                 var dbFacadeResolver = scope.ServiceProvider.GetRequiredService<IDbFacadeResolver>();
-                var db = dbFacadeResolver.Database;
-
-                var migrations = await db.GetPendingMigrationsAsync(cancellationToken: cancellationToken);
-                var isPendingMigration = migrations.Any();
-
-                await db.MigrateAsync(cancellationToken);
+                await dbFacadeResolver.Database.MigrateAsync(cancellationToken);
                 _logger.LogInformation("Done migration database schema.");
-
-                var assembly = Assembly.GetEntryAssembly();
-                if (assembly != null)
-                {
-                    var files = assembly.GetManifestResourceNames();
-                    var filePrefix = $"{assembly.GetName().Name}.Core.Infrastructure.Persistence.Scripts.";
-
-                    foreach (var file in files
-                        .Where(f => f.StartsWith(filePrefix) && f.EndsWith(".sql"))
-                        .Select(f => new {PhysicalFile = f, LogicalFile = f.Replace(filePrefix, string.Empty)})
-                        .OrderBy(f => f.LogicalFile))
-                    {
-                        if (!isPendingMigration || !migrations.Any(x => x.Contains(file.LogicalFile.Split('_')[0])))
-                        {
-                            continue;
-                        }
-
-                        await using var stream = assembly.GetManifestResourceStream(file.PhysicalFile);
-                        using var reader = new StreamReader(stream!);
-                        var command = await reader.ReadToEndAsync();
-
-                        if (string.IsNullOrWhiteSpace(command))
-                            continue;
-
-                        await using var tx = await db.BeginTransactionAsync(cancellationToken);
-                        try
-                        {
-                            await db.ExecuteSqlRawAsync(command, cancellationToken: cancellationToken);
-                            await tx.CommitAsync(cancellationToken);
-                            _logger.LogInformation("Done migration with seed data.");
-                        }
-                        catch
-                        {
-                            await tx.RollbackAsync(cancellationToken);
-                            _logger.LogInformation("Couldn't migration with seed data.");
-                            throw;
-                        }
-                    }
-                }
-
             });
         }
 
