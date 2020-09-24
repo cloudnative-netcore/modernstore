@@ -31,8 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GraphQL\" />
+    <Folder Include="Core\Application\AddProduct\" />
+    <Folder Include="Core\Domain\Event\" />
+    <Folder Include="Core\Infrastructure\Gateway\" />
+    <Folder Include="Http\GraphQL\" />
     <Folder Include="Jobs\" />
+    <Folder Include="Grpc\" />
     <Folder Include="Subscribers\" />
     <Folder Include="Publishers\" />
   </ItemGroup>

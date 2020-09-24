@@ -33,13 +33,13 @@ namespace N8T.Infrastructure.Auth
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-            if (request is not IAuthRequest)
+            if (!(request is IAuthRequest))
             {
                 return await next();
             }
 
-            var currentUser = _httpContextAccessor.HttpContext.User;
-
+            _logger.LogInformation("{Prefix}: Starting AuthBehavior", nameof(AuthBehavior<TRequest, TResponse>));
+            var currentUser = _httpContextAccessor.HttpContext?.User;
             if (currentUser == null)
             {
                 throw new Exception("You need to login.");
@@ -52,7 +52,7 @@ namespace N8T.Infrastructure.Auth
 
             if (!result.Succeeded)
             {
-                throw new UnauthorizedAccessException(result.Failure.FailedRequirements.First().ToString());
+                throw new UnauthorizedAccessException(result.Failure?.FailedRequirements.First().ToString());
             }
 
             return await next();

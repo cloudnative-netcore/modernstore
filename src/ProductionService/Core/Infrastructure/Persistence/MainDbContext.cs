@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using N8T.Infrastructure.EfCore;
 using ProductionService.Core.Domain;
+using ProductionService.Core.Domain.Model;
 
 namespace ProductionService.Core.Infrastructure.Persistence
 {

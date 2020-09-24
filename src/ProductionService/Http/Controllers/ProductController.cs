@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductionService.Core.Application.Common;
 using ProductionService.Core.Application.GetProducts;
 
-namespace ProductionService.Http
+namespace ProductionService.Http.Controllers
 {
     [ApiController]
     [Route("products")]

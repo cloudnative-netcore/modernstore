@@ -1,6 +1,6 @@
 using N8T.Domain;
 
-namespace ProductionService.Core.Domain
+namespace ProductionService.Core.Domain.Model
 {
     public class Product : EntityBase, IAggregateRoot
     {

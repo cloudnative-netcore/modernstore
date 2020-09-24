@@ -1,8 +1,8 @@
 using N8T.Domain;
 
-namespace ProductionService.Core.Domain
+namespace ProductionService.Core.Domain.Model
 {
-    public class Store : EntityBase
+    public class Category : EntityBase
     {
         public int Id { get; set; }
 

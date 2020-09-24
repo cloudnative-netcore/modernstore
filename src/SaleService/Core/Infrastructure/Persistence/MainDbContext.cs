@@ -16,12 +16,12 @@ namespace SaleService.Core.Infrastructure.Persistence
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
-        public DbSet<Store> Stores { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<Staff> Staffs { get; set; } = null!;
+        public DbSet<Store> Stores { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderItem> OrderItems { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
