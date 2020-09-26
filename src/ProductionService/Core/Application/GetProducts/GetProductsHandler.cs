@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using N8T.Infrastructure.Cache;
 using N8T.Infrastructure.Dapper;
 using ProductionService.Core.Application.Common;
 
@@ -12,18 +14,17 @@ namespace ProductionService.Core.Application.GetProducts
     public class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
     {
         private readonly IDbConnection _connection;
+        private readonly IRedisCacheService _cacheService;
 
-        public GetProductsHandler(IDbConnection connection)
+        public GetProductsHandler(IDbConnection connection, IRedisCacheService cacheService)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _cacheService = cacheService ?? throw new ArgumentNullException(nameof(cacheService));
         }
 
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            if (request is null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            if (request == null) throw new ArgumentNullException(nameof(request));
 
             const string query = @"
                 SELECT * FROM (
@@ -48,13 +49,15 @@ namespace ProductionService.Core.Application.GetProducts
                 PagedNumber = request.Page, RowsPerPage = request.PageSize, Term = $"%{request.SearchProductName}%"
             };
 
-            var result = await _connection.QueryData<List<ProductDto>>(query, @params);
+            var results = await _cacheService.HashGetOrSetAsync(
+                $"products:{request.SearchProductName}_{request.Page}_{request.PageSize}",
+                $"{request.SearchProductName}_{request.Page}_{request.PageSize}", async () =>
+                {
+                    var result = await _connection.QueryData<List<ProductDto>>(query, @params);
+                    return result;
+                });
 
-            //this is sample for how to use DataReader
-            //var reader = await _connection.ExecuteReaderAsync(query, @params);
-            //var result = reader.GetData<List<ProductDto>>();
-
-            return result;
+            return results;
         }
     }
 }

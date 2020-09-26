@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="0.10.0-preview01" />
-    <PackageReference Include="Figgle" Version="0.4.0" />
     <PackageReference Include="FluentValidation" Version="9.2.1" />
     <PackageReference Include="Google.Protobuf" Version="4.0.0-rc2" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.32.0-pre1" />

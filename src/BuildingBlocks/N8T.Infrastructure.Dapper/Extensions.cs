@@ -9,6 +9,15 @@ namespace N8T.Infrastructure.Dapper
 {
     public static class Extensions
     {
+        /// <summary>
+        /// this is sample for how to use DataReader
+        /// var reader = await _connection.ExecuteReaderAsync(query, @params);
+        /// var result = reader.GetData<List<ProductDto>>();
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader"></param>
+        /// <param name="ordinal"></param>
+        /// <returns></returns>
         public static T GetData<T>(this IDataReader reader, int ordinal = 0)
         {
             if (reader == null) throw new ArgumentNullException(nameof(reader));

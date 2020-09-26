@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using N8T.Infrastructure;
+using N8T.Infrastructure.Cache;
 using N8T.Infrastructure.EfCore;
 using N8T.Infrastructure.Validator;
 using ProductionService.Core.Infrastructure.Persistence;
@@ -28,7 +29,8 @@ namespace ProductionService
                 .AddCustomValidators<Program>()
                 .AddCustomDbContext<MainDbContext, Startup>(Configuration.GetConnectionString("sqlserver"))
                 .AddTransient<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("sqlserver")))
-                .AddControllers();
+                .AddControllers()
+                .Services.AddCustomRedisCache(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

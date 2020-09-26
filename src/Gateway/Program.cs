@@ -20,7 +20,7 @@ namespace AppGateway
                     {
                         var config = builder.Build();
                         var appOptions = config.GetOptions<AppOptions>("app");
-                        Console.WriteLine(Figgle.FiggleFonts.Doom.Render($"{appOptions.Name}"));
+                        Console.WriteLine($"Starting {appOptions.Name}");
                     });
 
                     webBuilder.UseStartup<Startup>();

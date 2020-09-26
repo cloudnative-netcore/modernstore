@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\N8T.Domain\N8T.Domain.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\N8T.Infrastructure.Cache\N8T.Infrastructure.Cache.csproj" />
     <ProjectReference Include="..\BuildingBlocks\N8T.Infrastructure.Dapper\N8T.Infrastructure.Dapper.csproj" />
     <ProjectReference Include="..\BuildingBlocks\N8T.Infrastructure.EfCore\N8T.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\BuildingBlocks\N8T.Infrastructure.GraphQL\N8T.Infrastructure.GraphQL.csproj" />
