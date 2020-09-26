@@ -113,7 +113,7 @@ namespace N8T.Infrastructure.Cache
 
             foreach (var key in keys)
             {
-                succeed = Database.HashDelete(key, hashField.ToLower());
+                succeed = await Database.KeyDeleteAsync(key);
             }
 
             return succeed;

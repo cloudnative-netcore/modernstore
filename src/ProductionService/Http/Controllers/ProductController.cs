@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProductionService.Core.Application.Common;
+using ProductionService.Core.Application.CreateProduct;
 using ProductionService.Core.Application.GetProducts;
 
 namespace ProductionService.Http.Controllers
@@ -26,6 +27,12 @@ namespace ProductionService.Http.Controllers
             {
                 SearchProductName = term, Page = page, PageSize = pageSize
             });
+        }
+
+        [HttpPost]
+        public async Task<ProductDto> Create(CreateProductCommand command)
+        {
+            return await _mediator.Send(command);
         }
     }
 }

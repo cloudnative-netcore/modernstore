@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using N8T.Infrastructure.Cache;
 using N8T.Infrastructure.Dapper;
 using ProductionService.Core.Application.Common;
+using ProductionService.Core.Infrastructure;
 
 namespace ProductionService.Core.Application.GetProducts
 {
@@ -50,7 +50,7 @@ namespace ProductionService.Core.Application.GetProducts
             };
 
             var results = await _cacheService.HashGetOrSetAsync(
-                $"products:{request.SearchProductName}_{request.Page}_{request.PageSize}",
+                $"{CacheKeys.ProductsKey}:{request.SearchProductName}_{request.Page}_{request.PageSize}",
                 $"{request.SearchProductName}_{request.Page}_{request.PageSize}", async () =>
                 {
                     var result = await _connection.QueryData<List<ProductDto>>(query, @params);
