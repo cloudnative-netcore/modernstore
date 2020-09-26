@@ -57,6 +57,10 @@ namespace N8T.Infrastructure.EfCore
                 var tasks = domainEvents
                     .Select(async @event =>
                     {
+                        // because we have int identity
+                        var id = (response as dynamic)?.Id;
+                        @event.MetaData.Add("Id", id);
+
                         await _mediator.Publish(@event, cancellationToken);
                         _logger.LogDebug(
                             "{Prefix} Published domain event {DomainEventName} with payload {DomainEventContent}", nameof(TxBehavior<TRequest, TResponse>), @event.GetType().FullName, JsonSerializer.Serialize(@event));

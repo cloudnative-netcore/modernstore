@@ -10,7 +10,7 @@ namespace N8T.Infrastructure.Cache
         Task<T> GetOrSetAsync<T>(string key, Func<Task<T>> func, TimeSpan expiration);
         Task<T> HashGetOrSetAsync<T>(string key, string hashField, Func<Task<T>> func);
         Task<IEnumerable<string>> GetKeysAsync(string pattern);
-        Task<bool> HashDeleteAsync(string pattern = "*", string hashField = "");
+        Task<bool> RemoveAllKeysAsync(string pattern = "*");
         Task RemoveAsync(string key);
         Task ResetAsync();
     }

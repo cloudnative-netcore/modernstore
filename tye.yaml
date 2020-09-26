@@ -6,13 +6,20 @@
 #
 name: modernstore
 
+extensions:
+- name: dapr
+  log-level: debug
+  config: appconfig
+  # components-path configures the components path of the dapr sidecard
+  components-path: "./components/"
+
 services:
 
-# - name: productionservice
-#   project: src/ProductionService/ProductionService.csproj
+- name: productionservice
+  project: src/ProductionService/ProductionService.csproj
 
-# - name: saleservice
-#   project: src/SaleService/SaleService.csproj
+- name: saleservice
+  project: src/SaleService/SaleService.csproj
 
 # - name: appgateway
 #   project: src/Gateway/AppGateway.csproj
@@ -32,3 +39,11 @@ services:
   image: redis
   bindings:
     - port: 6379
+
+# To ensure that your are running a dapr placement container with the right binding port.
+# (50005 as HostPort)
+- name: placement
+  image: daprio/dapr
+  args: ./placement
+  bindings:
+    - port: 50005

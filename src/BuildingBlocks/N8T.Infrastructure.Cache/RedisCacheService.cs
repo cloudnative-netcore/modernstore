@@ -106,7 +106,7 @@ namespace N8T.Infrastructure.Cache
             return value;
         }
 
-        public async Task<bool> HashDeleteAsync(string pattern = "*", string hashField = "")
+        public async Task<bool> RemoveAllKeysAsync(string pattern = "*")
         {
             var succeed = true;
             var keys = await GetKeysAsync($"{_redisCacheOptions.Prefix}:{pattern}");

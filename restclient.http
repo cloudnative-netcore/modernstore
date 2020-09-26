@@ -6,7 +6,7 @@
 @contentType = application/json
 
 ###
-@term = sample
+@term = Fashion
 @page = 1
 @pageSize = 20
 GET {{host}}/products/{{term}}/{{page}}/{{pageSize}} HTTP/1.1
