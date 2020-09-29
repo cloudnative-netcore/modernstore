@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{A0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8T.Infrastructure.Cache", "src\BuildingBlocks\N8T.Infrastructure.Cache\N8T.Infrastructure.Cache.csproj", "{3FB8ADBA-1386-49E1-91AD-6794C5332509}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService", "src\IdentityService\IdentityService.csproj", "{B05BC754-2CF6-4732-927B-9AB8CA8500A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{3FB8ADBA-1386-49E1-91AD-6794C5332509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FB8ADBA-1386-49E1-91AD-6794C5332509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FB8ADBA-1386-49E1-91AD-6794C5332509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B05BC754-2CF6-4732-927B-9AB8CA8500A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B05BC754-2CF6-4732-927B-9AB8CA8500A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B05BC754-2CF6-4732-927B-9AB8CA8500A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B05BC754-2CF6-4732-927B-9AB8CA8500A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{F13DC714-CC5D-40A0-B8DD-0EA065CC9A93} = {2623B7D6-9D07-4630-B724-1F0ED4641A7F}
 		{A0D6833F-1572-4092-B358-C1E56EC5989B} = {A06B30E9-2BFB-47EB-8927-269A3FB4E711}
 		{3FB8ADBA-1386-49E1-91AD-6794C5332509} = {5D5F33B9-C865-47A0-AA10-656946353D99}
+		{B05BC754-2CF6-4732-927B-9AB8CA8500A5} = {2623B7D6-9D07-4630-B724-1F0ED4641A7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8082DC85-6D58-4BE0-896C-D10A238E81E2}

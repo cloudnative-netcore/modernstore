@@ -49,15 +49,10 @@ namespace ProductionService.Core.Application.GetProducts
                 PagedNumber = request.Page, RowsPerPage = request.PageSize, Term = $"%{request.SearchProductName}%"
             };
 
-            var results = await _cacheService.HashGetOrSetAsync(
+            return await _cacheService.HashGetOrSetAsync(
                 $"{CacheKeys.ProductsKey}:{request.SearchProductName}_{request.Page}_{request.PageSize}",
-                $"{request.SearchProductName}_{request.Page}_{request.PageSize}", async () =>
-                {
-                    var result = await _connection.QueryData<List<ProductDto>>(query, @params);
-                    return result;
-                });
-
-            return results;
+                $"{request.SearchProductName}_{request.Page}_{request.PageSize}",
+                async () => await _connection.QueryData<List<ProductDto>>(query, @params));
         }
     }
 }
