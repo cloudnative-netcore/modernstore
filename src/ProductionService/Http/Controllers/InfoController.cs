@@ -6,7 +6,7 @@ namespace ProductionService.Http.Controllers
 {
     [ApiController]
     [Route("")]
-    public class AppInfoController : ControllerBase
+    public class InfoController : ControllerBase
     {
         [HttpGet("/info")]
         public IActionResult Status([FromServices] IConfiguration config)

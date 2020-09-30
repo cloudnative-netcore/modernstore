@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using N8T.Infrastructure.Cache;
 using ProductionService.Core.Application.Common;
@@ -13,6 +14,19 @@ using ProductionService.Core.Infrastructure.Persistence;
 
 namespace ProductionService.Core.Application.GetCategories
 {
+    public class GetCategoriesAuthzHandler : AuthorizationHandler<GetCategoriesQuery>
+    {
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, GetCategoriesQuery requirement)
+        {
+            if (context.User.HasClaim("user_role", "sys_admin") is true)
+            {
+                context.Succeed(requirement);
+            }
+
+            return Task.CompletedTask;
+        }
+    }
+
     public class GetCategoriesHandler : IRequestHandler<GetCategoriesQuery, IEnumerable<CategoryDto>>
     {
         private readonly MainDbContext _dbContext;

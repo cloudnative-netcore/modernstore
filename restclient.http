@@ -1,19 +1,17 @@
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-@hostname = localhost
-@host = http://{{hostname}}:50607
-@idphost = http://{{hostname}}:50611
+@idphost = https://localhost:5001
+@host = http://localhost:5002
 @contentType = application/json
 
 ###
 # @name auth
 POST {{idphost}}/connect/token HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
+content-type: application/x-www-form-urlencoded
 
 grant_type=password
 &client_id=store.password
 &client_secret=49C1A7E1-0C79-4A89-A3D6-A37998FB86B0
-&scope=scope1
 &username=bob
 &password=bob
 
@@ -22,25 +20,26 @@ grant_type=password
 @page = 1
 @pageSize = 20
 GET {{host}}/products/{{term}}/{{page}}/{{pageSize}} HTTP/1.1
-Content-Type: {{contentType}}
+content-type: {{contentType}}
 
 ###
 POST {{host}}/products HTTP/1.1
 content-type: {{contentType}}
+authorization: bearer {{auth.response.body.access_token}}
 
 {
-    "name": "sample 01",
-    "modelYear": 2020,
-    "listPrice": 1000,
-    "brandId": 1,
-    "categoryId": 1
+  "name": "sample 01",
+  "modelYear": 2020,
+  "listPrice": 1000,
+  "brandId": 1,
+  "categoryId": 1
 }
 
 ###
 GET {{host}}/categories HTTP/1.1
-Content-Type: {{contentType}}
-Authorization: bearer {{auth.response.body.access_token}}
+content-type: {{contentType}}
+authorization: bearer {{auth.response.body.access_token}}
 
 ###
 GET {{host}}/s/products HTTP/1.1
-Content-Type: {{contentType}}
+content-type: {{contentType}}

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductionService.Core.Application.Common;
 using ProductionService.Core.Application.CreateProduct;
@@ -29,6 +30,7 @@ namespace ProductionService.Http.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ProductDto> Create(CreateProductCommand command)
         {

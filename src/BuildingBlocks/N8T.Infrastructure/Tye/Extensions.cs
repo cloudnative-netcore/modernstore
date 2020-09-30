@@ -13,7 +13,7 @@ namespace N8T.Infrastructure.Tye
             foreach (var directory in Directory.GetDirectories("/var/tye/bindings/"))
             {
                 Console.WriteLine($"Adding config in '{directory}'.");
-                config.AddKeyPerFile(directory, optional: true);
+                config.AddKeyPerFile(directory, true);
             }
         }
 
@@ -21,34 +21,22 @@ namespace N8T.Infrastructure.Tye
         {
             var appOptions = config.GetOptions<AppOptions>("app");
 
-            string clientUrl;
-            if (!appOptions.NoTye.Enabled)
-            {
-                clientUrl = config.GetServiceUri(appId).ToString();
-            }
-            else
-            {
-                clientUrl = config.GetValue<string>($"app:noTye:services:{appId}:url");
-            }
+            var clientUrl = !appOptions.NoTye.Enabled
+                ? config.GetServiceUri(appId)?.ToString()
+                : config.GetValue<string>($"app:noTye:services:{appId}:url");
 
-            return new Uri($"{clientUrl?.ToString().TrimEnd('/')}/graphql");
+            return new Uri($"{clientUrl?.TrimEnd('/')}/graphql");
         }
 
         public static Uri GetRestUriFor(this IConfiguration config, string appId)
         {
             var appOptions = config.GetOptions<AppOptions>("app");
 
-            string clientUrl;
-            if (!appOptions.NoTye.Enabled)
-            {
-                clientUrl = config.GetServiceUri(appId).ToString();
-            }
-            else
-            {
-                clientUrl = config.GetValue<string>($"app:noTye:services:{appId}:url");
-            }
+            var clientUrl = !appOptions.NoTye.Enabled
+                ? config.GetServiceUri(appId)?.ToString()
+                : config.GetValue<string>($"app:noTye:services:{appId}:url");
 
-            return new Uri(clientUrl?.ToString().TrimEnd('/'));
+            return new Uri(clientUrl?.TrimEnd('/')!);
         }
 
         public static Uri GetGrpcUriFor(this IConfiguration config, string appId)
@@ -68,7 +56,12 @@ namespace N8T.Infrastructure.Tye
                 clientUrl = config.GetValue<string>($"app:noTye:services:{appId}:grpcUrl");
             }
 
-            return new Uri(clientUrl);
+            return new Uri(clientUrl!);
+        }
+
+        public static bool IsRunOnTye(this IConfiguration config, string serviceName)
+        {
+            return config.GetServiceUri(serviceName) is not null;
         }
     }
 }
