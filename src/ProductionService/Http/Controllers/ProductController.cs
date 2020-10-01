@@ -21,20 +21,12 @@ namespace ProductionService.Http.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet("{term}/{page}/{pageSize}")]
-        public async Task<IEnumerable<ProductDto>> Get(string term = "", int page = 1, int pageSize = 20)
-        {
-            return await _mediator.Send(new GetProductsQuery
-            {
-                SearchProductName = term, Page = page, PageSize = pageSize
-            });
-        }
+        [HttpGet]
+        public async Task<IEnumerable<ProductDto>> Get(string term = "", int page = 1, int pageSize = 20) =>
+            await _mediator.Send(new GetProductsQuery {SearchProductName = term, Page = page, PageSize = pageSize});
 
         [Authorize]
         [HttpPost]
-        public async Task<ProductDto> Create(CreateProductCommand command)
-        {
-            return await _mediator.Send(command);
-        }
+        public async Task<ProductDto> Create(CreateProductCommand command) => await _mediator.Send(command);
     }
 }

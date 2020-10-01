@@ -22,9 +22,6 @@ namespace ProductionService.Http.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CategoryDto>> Get()
-        {
-            return await _mediator.Send(new GetCategoriesQuery());
-        }
+        public async Task<IEnumerable<CategoryDto>> Get() => await _mediator.Send(new GetCategoriesQuery());
     }
 }

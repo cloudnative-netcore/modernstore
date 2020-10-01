@@ -9,9 +9,6 @@ namespace ProductionService.Http.Controllers
     public class InfoController : ControllerBase
     {
         [HttpGet("/info")]
-        public IActionResult Status([FromServices] IConfiguration config)
-        {
-            return Content(config.BuildAppStatus());
-        }
+        public IActionResult Status([FromServices] IConfiguration config) => Content(config.BuildAppStatus());
     }
 }

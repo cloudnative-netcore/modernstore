@@ -1,7 +1,7 @@
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-@idphost = https://localhost:5001
-@host = http://localhost:5002
+@idphost = http://localhost:55445
+@host = http://localhost:55447
 @contentType = application/json
 
 ###
@@ -19,7 +19,7 @@ grant_type=password
 @term = Fashion
 @page = 1
 @pageSize = 20
-GET {{host}}/products/{{term}}/{{page}}/{{pageSize}} HTTP/1.1
+GET {{host}}/products?term={{term}}&page={{page}}&pageSize={{pageSize}} HTTP/1.1
 content-type: {{contentType}}
 
 ###
@@ -39,7 +39,3 @@ authorization: bearer {{auth.response.body.access_token}}
 GET {{host}}/categories HTTP/1.1
 content-type: {{contentType}}
 authorization: bearer {{auth.response.body.access_token}}
-
-###
-GET {{host}}/s/products HTTP/1.1
-content-type: {{contentType}}
