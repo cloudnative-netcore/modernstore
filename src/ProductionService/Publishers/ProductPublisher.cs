@@ -26,6 +26,12 @@ namespace ProductionService.Publishers
             await _cacheService.RemoveAllKeysAsync($"{CacheKeys.ProductsKey}:*");
 
             // do publish this changes to external services
+            if (!notification.MetaData.TryGetValue("id", out var id))
+            {
+                throw new Exception("Couldn't get id from metadata");
+            }
+
+            notification.Id = (int)id;
             await _daprClient.PublishEventAsync("pubsub", "product-created", notification, cancellationToken);
         }
     }

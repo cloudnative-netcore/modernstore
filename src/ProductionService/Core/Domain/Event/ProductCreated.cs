@@ -4,6 +4,7 @@ namespace ProductionService.Core.Domain.Event
 {
     public class ProductCreated : DomainEventBase
     {
+        public int Id { get; set; }
         public string Name { get; set; } = default!;
         public int BrandId { get; set; }
         public int CategoryId { get; set; }

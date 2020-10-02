@@ -30,6 +30,20 @@ Then we can use `restclient.http` to test the application. Happy hacking!
 
 ![](assets/clean_arch.png)
 
+# [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+
+Edit and add content to `settings.json` file:
+
+```json
+"rest-client.environmentVariables": {
+  "$shared": {
+    "contentType": "application/json",
+    "idphost": "http://<identity-service>:<port>",
+    "host": "http://<app-gateway>:<port>",
+  }
+}
+```
+
 # Database schema
 
 The database schema is inspired from sqlservertutorial project at https://www.sqlservertutorial.net/sql-server-sample-database/

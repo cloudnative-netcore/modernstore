@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
@@ -14,19 +13,14 @@ namespace ProductionService.Http.Controllers
     [Route("products")]
     public class ProductController : ControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public ProductController(IMediator mediator)
-        {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> Get(string term = "", int page = 1, int pageSize = 20) =>
-            await _mediator.Send(new GetProductsQuery {SearchProductName = term, Page = page, PageSize = pageSize});
+        public async Task<IEnumerable<ProductDto>> Get([FromServices] IMediator mediator,
+            string term = "", int page = 1, int pageSize = 20) =>
+            await mediator.Send(new GetProductsQuery {SearchProductName = term, Page = page, PageSize = pageSize});
 
         [Authorize]
         [HttpPost]
-        public async Task<ProductDto> Create(CreateProductCommand command) => await _mediator.Send(command);
+        public async Task<ProductDto> Create([FromServices] IMediator mediator, CreateProductCommand command) =>
+            await mediator.Send(command);
     }
 }

@@ -87,7 +87,7 @@ namespace SaleService.Core.Infrastructure.Persistence
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne<Order>()
-                .WithMany()
+                .WithMany(x => x.OrderItems)
                 .HasForeignKey(x => x.OrderId)
                 .IsRequired();
         }

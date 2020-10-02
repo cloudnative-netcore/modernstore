@@ -59,7 +59,7 @@ namespace N8T.Infrastructure.EfCore
                     {
                         // because we have int identity
                         var id = (response as dynamic)?.Id;
-                        @event.MetaData.Add("Id", id);
+                        @event.MetaData.Add("id", id);
 
                         await _mediator.Publish(@event, cancellationToken);
                         _logger.LogDebug(

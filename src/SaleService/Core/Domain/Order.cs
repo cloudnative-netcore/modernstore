@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using N8T.Domain;
 
 namespace SaleService.Core.Domain
@@ -16,5 +17,6 @@ namespace SaleService.Core.Domain
         public Store Store { get; set; }
         public int StaffId { get; set; }
         public Staff Staff { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

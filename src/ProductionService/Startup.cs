@@ -1,5 +1,3 @@
-using System.Data;
-using System.Data.SqlClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +29,6 @@ namespace ProductionService
                 .AddCustomMediatR<Startup>()
                 .AddCustomValidators<Program>()
                 .AddCustomDbContext<MainDbContext, Startup>(Configuration.GetConnectionString("sqlserver"))
-                .AddTransient<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("sqlserver")))
                 .AddCustomRedisCache(Configuration)
                 .AddCustomDaprClient()
                 .AddControllers();

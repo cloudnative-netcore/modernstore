@@ -10,8 +10,8 @@ using SaleService.Core.Infrastructure.Persistence;
 namespace SaleService.Core.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20200922160521_InitSeedData")]
-    partial class InitSeedData
+    [Migration("20201002075638_InitialSaleDb")]
+    partial class InitialSaleDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -299,7 +299,7 @@ namespace SaleService.Core.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("SaleService.Core.Domain.OrderItem", b =>
                 {
                     b.HasOne("SaleService.Core.Domain.Order", null)
-                        .WithMany()
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -329,6 +329,11 @@ namespace SaleService.Core.Infrastructure.Persistence.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SaleService.Core.Domain.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("SaleService.Core.Domain.Staff", b =>

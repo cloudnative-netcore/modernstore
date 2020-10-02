@@ -11,7 +11,8 @@ namespace N8T.Infrastructure.OTel
 {
     public static class Extensions
     {
-        public static IServiceCollection AddCustomOtelWithZipkin(this IServiceCollection services, IConfiguration config, Action<ZipkinExporterOptions> configureZipkin = null)
+        public static IServiceCollection AddCustomOtelWithZipkin(this IServiceCollection services,
+            IConfiguration config, Action<ZipkinExporterOptions> configureZipkin = null)
         {
             services.AddOpenTelemetry(b => b
                 .SetSampler(new AlwaysOnSampler())
@@ -42,7 +43,6 @@ namespace N8T.Infrastructure.OTel
 
             builder.AddInstrumentation((activitySource) => new OTelMediatRInstrumentation(activitySource));
             builder.AddActivitySource(OTelMediatROptions.OTelMediatRName);
-                
 
             return builder;
         }

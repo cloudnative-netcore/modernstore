@@ -297,7 +297,7 @@ namespace SaleService.Core.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("SaleService.Core.Domain.OrderItem", b =>
                 {
                     b.HasOne("SaleService.Core.Domain.Order", null)
-                        .WithMany()
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -327,6 +327,11 @@ namespace SaleService.Core.Infrastructure.Persistence.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SaleService.Core.Domain.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("SaleService.Core.Domain.Staff", b =>

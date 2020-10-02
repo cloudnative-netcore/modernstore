@@ -3,7 +3,7 @@ using N8T.Infrastructure.EfCore;
 
 namespace SaleService.Core.Infrastructure.Persistence.Migrations
 {
-    public partial class InitSeedData : Migration
+    public partial class InitialSeedData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,6 +12,7 @@ namespace SaleService.Core.Infrastructure.Persistence.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+
         }
     }
 }

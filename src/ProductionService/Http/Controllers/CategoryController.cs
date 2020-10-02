@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
@@ -14,14 +13,8 @@ namespace ProductionService.Http.Controllers
     [Route("categories")]
     public class CategoryController : ControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public CategoryController(IMediator mediator)
-        {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
         [HttpGet]
-        public async Task<IEnumerable<CategoryDto>> Get() => await _mediator.Send(new GetCategoriesQuery());
+        public async Task<IEnumerable<CategoryDto>> Get([FromServices] IMediator mediator) =>
+            await mediator.Send(new GetCategoriesQuery());
     }
 }

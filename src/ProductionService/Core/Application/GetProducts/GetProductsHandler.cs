@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using N8T.Infrastructure.Cache;
 using N8T.Infrastructure.Dapper;
 using ProductionService.Core.Application.Common;
@@ -13,14 +15,19 @@ namespace ProductionService.Core.Application.GetProducts
 {
     public class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
     {
-        private readonly IDbConnection _connection;
+        private readonly Lazy<IDbConnection> _dbConnection;
         private readonly IRedisCacheService _cacheService;
 
-        public GetProductsHandler(IDbConnection connection, IRedisCacheService cacheService)
+        public GetProductsHandler(IConfiguration config, IRedisCacheService cacheService)
         {
-            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            if (config == null) throw new ArgumentNullException(nameof(config));
+
             _cacheService = cacheService ?? throw new ArgumentNullException(nameof(cacheService));
+            _dbConnection = new Lazy<IDbConnection>(() =>
+                new SqlConnection(config.GetConnectionString("sqlserver")));
         }
+
+        public IDbConnection DbConnection => _dbConnection.Value;
 
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
@@ -52,7 +59,12 @@ namespace ProductionService.Core.Application.GetProducts
             return await _cacheService.HashGetOrSetAsync(
                 $"{CacheKeys.ProductsKey}:{request.SearchProductName}_{request.Page}_{request.PageSize}",
                 $"{request.SearchProductName}_{request.Page}_{request.PageSize}",
-                async () => await _connection.QueryData<List<ProductDto>>(query, @params));
+                async () =>
+                {
+                    using var db = DbConnection;
+                    return await db.QueryData<List<ProductDto>>(query, @params);
+
+                });
         }
     }
 }

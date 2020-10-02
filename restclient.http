@@ -1,9 +1,3 @@
-# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-
-@idphost = http://localhost:55445
-@host = http://localhost:55447
-@contentType = application/json
-
 ###
 # @name auth
 POST {{idphost}}/connect/token HTTP/1.1
@@ -28,7 +22,7 @@ content-type: {{contentType}}
 authorization: bearer {{auth.response.body.access_token}}
 
 {
-  "name": "sample 01",
+  "name": "sample 02",
   "modelYear": 2020,
   "listPrice": 1000,
   "brandId": 1,
